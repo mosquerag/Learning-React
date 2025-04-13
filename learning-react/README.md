@@ -1,4 +1,3 @@
-
 # USESTATE
 - useState: Usa el estado : Relacionar una variable para
 que luego se pueda utilizar en render ; posee un metodo para modificar dicha varible y que esto haga un trigger un cambio de estado
@@ -38,4 +37,56 @@ que luego se pueda utilizar en render ; posee un metodo para modificar dicha var
     estado.set(20); // Cambiamos el valor a 20
     console.log(estado.get()); // Devuelve: 20
 
+# USUEFFECT ()
+- Es un hook de React que se usa para ejecutar efectos secundarios en componentes 
+¿Qué es un efecto secundario?
+- Cualquier cosa que no sea directamente renderizar la interfaz, como por ejemplo:
+- Llamar una API (endpoint externo)
+- Escuchar eventos (como clicks globales, teclado, etc.)
+- Usar temporizadores (setTimeout, setInterval)
+- Conectarse a websockets
+- Manipular el DOM directamente
+
+ * Notas sobre el useEffect:
+ * - Se ejecuta cuando se monta el componente (primer render).
+ * - Se ejecuta cada vez que se modifica alguno de los valores incluidos en el arreglo de dependencias.
+ * - Si no se incluye un arreglo de dependencias, se ejecuta cada vez que hay un cambio en cualquier parte del componente, lo cual puede ocasionar errores o comportamientos inesperados.
+
+const [data, setData] = useState([]);
+useEffect(() => {
+  /** Esta lógica se ejecuta al montar el componente o cuando 'data' cambie. */
+
+  return () => {
+    /** Esta función se ejecuta cuando el componente se destruye.
+     * Se usa para liberar memoria (manejar correctamente el estado).
+     */
+  };
+}, [data]);
+
+# Uso correcto del useEffect:
+ * - Cuando necesitamos sincronizar con entidades externas (por ejemplo, APIs).
+ * - Cuando hacemos operaciones asíncronas.
+ * - Cuando recibimos parámetros de entrada externos al componente.
+
+    - useEffect(() => {
+    console.log("Me ejecuto UNA SOLA VEZ, cuando el componente se monta.");
+    }, []);
+
+    - useEffect(() => {
+    console.log("Me ejecuto cada vez que el valor de 'estado' cambia.");
+    }, [estado]);
+
+    - useEffect(() => {
+    console.log("Me ejecuto en cada render.");
+    });
+# Ejemplo:
+const [data, setData] = useState([]);
+const fetchData = async () => {
+  const response = await fetch("https://api.example.com/data");
+  const json = await response.json();
+  setData(json);
+};
+useEffect(() => {
+  fetchData(); // solo se ejecuta 1 vez al cargar el componente
+}, []);
 
