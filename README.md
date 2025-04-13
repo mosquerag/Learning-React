@@ -5,11 +5,16 @@
 # Primero ir a la libría antes que al famework
 
 # REACT ES UNA LIBRERÍA 
-- Librería solamente tiene código de terceros que aumenta la funcionalidad de algo 
+- React es una librería de JavaScript, no un framework
+- Una librería contiene código de terceros que aumenta la funcionalidad de un lenguaje base (en este caso, JavaScript).
 
 # Cuando usar React versu un framework
 - Entre más javaScript sepa más va a saber React -> React es una (librería de JavaScript)
-- Número 1 en el mercado Laboral despues le sigue Angular -> Vue 
+- Número 1 en el mercado Laboral despues le sigue Angular -> Vue
+- Cuando necesitas una aplicación a medida.
+- Ideal para prototipos rápidos.
+- Aplicaciones SPA (una sola página que se actualiza dinámicamente sin recargar).
+- App privadas o con muchos cambios dinámicos.
 
 # Creadores de React -> Faceboock / Meta 
 - React : CSR -> Renderizado del aldo del cliente -> SPA -> Aplicaicón de pagina unicas 
@@ -22,8 +27,15 @@ Componentes =>
 - HTML -> tien ela capacidad de modificar el modelo 
 - Css 
 - Typescript / JavaScript 
- 
 - Controller -> Typescript -> modelo -> vista -> modelo (el modelo se puede actulizar desde la misma vista)
+  
+# Un componente en React es:
+- Una función que retorna código JSX.
+- Compuesto por:
+  HTML
+  CSS
+  JavaScript/TypeScript (para lógica y controladores).
+- Cada componente maneja su propia lógica y puede modificar su estado desde la vista.
 
 # Cuando entonces es conveniente utilizar react 
 - Cuando utilizamos App a medida (se puede ir todo seleccionando todo de apoco)
@@ -118,11 +130,13 @@ Reutilización → Se pueden compartir plugins en diferentes proyectos.
 - Modulo de css , todo lo que esté en ese componente y sus hijos vana poder utilizarlo
 
 # Atomizar 
-- Dividir una App en componentes pequeños y reutilizables 
+- Dividir una app en componentes pequeños y reutilizables, que manejen solo su propia lógica
 
 # Render :
 - Renderizar (o hacer un render) , significa actulizar la interfaz de usuario en la pantalla
+- Es actualizar la interfaz en la pantalla con base en los cambios en el estado o propiedades.
 
+  
 # USESTATE
 - useState: Usa el estado : Relacionar una variable para
 que luego se pueda utilizar en render ; posee un metodo para modificar dicha varible y que esto haga un trigger un cambio de estado
@@ -163,8 +177,59 @@ que luego se pueda utilizar en render ; posee un metodo para modificar dicha var
     console.log(estado.get()); // Devuelve: 20
 
 
-# USEEFFECT 
-- useEffetc
+# USUEFFECT ()
+- Es un hook de React que se usa para ejecutar efectos secundarios en componentes 
+¿Qué es un efecto secundario?
+- Cualquier cosa que no sea directamente renderizar la interfaz, como por ejemplo:
+- Llamar una API (endpoint externo)
+- Escuchar eventos (como clicks globales, teclado, etc.)
+- Usar temporizadores (setTimeout, setInterval)
+- Conectarse a websockets
+- Manipular el DOM directamente
+
+ * Notas sobre el useEffect:
+ * - Se ejecuta cuando se monta el componente (primer render).
+ * - Se ejecuta cada vez que se modifica alguno de los valores incluidos en el arreglo de dependencias.
+ * - Si no se incluye un arreglo de dependencias, se ejecuta cada vez que hay un cambio en cualquier parte del componente, lo cual puede ocasionar errores o comportamientos inesperados.
+
+const [data, setData] = useState([]);
+useEffect(() => {
+  /** Esta lógica se ejecuta al montar el componente o cuando 'data' cambie. */
+
+  return () => {
+    /** Esta función se ejecuta cuando el componente se destruye.
+     * Se usa para liberar memoria (manejar correctamente el estado).
+     */
+  };
+}, [data]);
+
+# Uso correcto del useEffect:
+ * - Cuando necesitamos sincronizar con entidades externas (por ejemplo, APIs).
+ * - Cuando hacemos operaciones asíncronas.
+ * - Cuando recibimos parámetros de entrada externos al componente.
+
+    - useEffect(() => {
+    console.log("Me ejecuto UNA SOLA VEZ, cuando el componente se monta.");
+    }, []);
+
+    - useEffect(() => {
+    console.log("Me ejecuto cada vez que el valor de 'estado' cambia.");
+    }, [estado]);
+
+    - useEffect(() => {
+    console.log("Me ejecuto en cada render.");
+    });
+# Ejemplo:
+const [data, setData] = useState([]);
+const fetchData = async () => {
+  const response = await fetch("https://api.example.com/data");
+  const json = await response.json();
+  setData(json);
+};
+useEffect(() => {
+  fetchData(); // solo se ejecuta 1 vez al cargar el componente
+}, []);
+
 
 
 # Hooks 
